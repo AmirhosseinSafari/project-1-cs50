@@ -11,7 +11,6 @@ def index(request):
 
 def entries(request, entries_title):
 
-    print(str(util.get_entry(entries_title)))
     if(str(util.get_entry(entries_title)) != "None"):
         return render(request, "encyclopedia/entries.html", {
             "entry_content": util.get_entry(entries_title),
