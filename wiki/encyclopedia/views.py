@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from . import util
-
+import os
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -39,4 +39,34 @@ def entries_search(request):
         return render(request, "encyclopedia/searchResults.html", {
             "entries": entryies_list,
             "entry_title": entries_title
+        })
+
+def create_new_page(request):
+    return render(request, "encyclopedia/createNewPage.html")
+
+def save_new_page(request): 
+
+    entries_title = str(request.POST["title_of_page"])
+    entries_content = str(request.POST["content_of_page"])
+
+    flag = False
+    for entry in util.list_entries():
+        if entry.upper() == entries_title.upper():
+            flag = True
+
+    if flag == False:
+        
+        file_name = entries_title + '.md'
+        filepath = os.path.join('D:\edx\project1\wiki\entries', file_name)
+        open(filepath, "a")
+
+        return render(request , "encyclopedia/entries.html", {
+            "entry_content": entries_content,
+            "entries_title": entries_title
+        })
+
+    else:
+        return render(request , "encyclopedia/messages.html", {
+            "message_title": "Error:Page exist!",
+            "message": "Page with \"" + entries_title + "\" exist!"
         })
