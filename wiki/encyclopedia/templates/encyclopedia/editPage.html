@@ -10,9 +10,9 @@
     <form action="{% url 'entries' title_entry %}" method="post">
         {% csrf_token %}
         <h5>{{title_entry}}</h5>
-        <textarea name="content_of_page" rows="30" cols="100" placeholder="Enter content of your page">{{previos_content}}
+        <textarea class="form-control" style="width: 90%; height: 400px;" name="content_of_page" rows="30" cols="100" placeholder="Enter content of your page">{{previos_content}}
         </textarea>
-        <input type="submit" value="Save">
+        <input class="btn btn-outline-primary" style="margin-top: 10px;" type="submit" value="Save">
     </form>
 
 {% endblock %}

@@ -13,9 +13,11 @@
 
     <form action="{% url 'save_new_page' %}" method="post">
         {% csrf_token %}
-        <input type="text" name="title_of_page" placeholder="Enter title of your page">
-        <textarea name="content_of_page" rows="30" cols="100" placeholder="Enter content of your page"></textarea>
-        <input type="submit" value="Save">
+        <input class="form-control" style="width: 80%; margin-bottom: 10px;" type="text" name="title_of_page" 
+            placeholder="Enter title of your page" autocomplete="off">
+        <textarea class="form-control" style="width: 80%; height: 400px;" name="content_of_page" rows="30" 
+            cols="100" placeholder="Enter content of your page" autocomplete="off"></textarea>
+        <input class="btn btn-outline-primary" style="margin-top: 10px;" type="submit" value="Save">
     </form>
 
 {% endblock %}
