@@ -1,7 +1,9 @@
-from django.shortcuts import render
+import random
+from django.shortcuts import render, redirect
 
 from . import util
 import os
+
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -41,10 +43,12 @@ def entries_search(request):
             "entry_title": entries_title
         })
 
+
 def create_new_page(request):
     return render(request, "encyclopedia/createNewPage.html")
 
-def save_new_page(request): 
+
+def save_new_page(request):
 
     entries_title = str(request.POST["title_of_page"])
     entries_content = str(request.POST["content_of_page"])
@@ -55,18 +59,32 @@ def save_new_page(request):
             flag = True
 
     if flag == False:
-        
-        file_name = entries_title + '.md'
-        filepath = os.path.join('D:\edx\project1\wiki\entries', file_name)
-        open(filepath, "a")
 
-        return render(request , "encyclopedia/entries.html", {
+        util.save_entry(entries_title, entries_content)
+        return render(request, "encyclopedia/entries.html", {
             "entry_content": entries_content,
             "entries_title": entries_title
         })
 
     else:
-        return render(request , "encyclopedia/messages.html", {
+        return render(request, "encyclopedia/messages.html", {
             "message_title": "Error:Page exist!",
             "message": "Page with \"" + entries_title + "\" exist!"
         })
+
+
+def edit_page(request, entries_title):
+
+    return render(request, "encyclopedia/editPage.html", {
+        "previos_content": util.get_entry(entries_title),
+        "title_entry": entries_title
+    })
+
+
+def random_page(request):
+    list_entries = util.list_entries()
+    rand_number = random.randint(0, len(list_entries)-1)
+    entries_title = list_entries[rand_number]
+
+    return redirect(entries, entries_title=entries_title)
+    
