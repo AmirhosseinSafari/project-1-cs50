@@ -62,8 +62,8 @@ def save_new_page(request):
 
         util.save_entry(entries_title, entries_content)
         return render(request, "encyclopedia/entries.html", {
-            "entry_content": entries_content,
-            "entries_title": entries_title
+            "entries_title": entries_title,
+            "entry_content": entries_content
         })
 
     else:
@@ -75,10 +75,20 @@ def save_new_page(request):
 
 def edit_page(request, entries_title):
 
-    return render(request, "encyclopedia/editPage.html", {
-        "previos_content": util.get_entry(entries_title),
-        "title_entry": entries_title
-    })
+    if request.method == "POST":
+        entries_content = str(request.POST["content_of_page"])
+        util.save_entry(entries_title, entries_content)
+
+        return render(request, "encyclopedia/entries.html", {
+            "entry_content": util.get_entry(entries_title),
+            "entries_title": entries_title
+        })
+
+    else:
+        return render(request, "encyclopedia/editPage.html", {
+            "previos_content": util.get_entry(entries_title),
+            "title_entry": entries_title
+        })
 
 
 def random_page(request):

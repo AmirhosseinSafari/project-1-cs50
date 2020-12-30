@@ -7,7 +7,7 @@
 {% block body %}
     
     <h3>Feel free to edit this page;)</h3>
-    <form action="{% url 'entries' title_entry %}" method="post">
+    <form action="{% url 'edit_page' title_entry %}" method="post">
         {% csrf_token %}
         <h5>{{title_entry}}</h5>
         <textarea class="form-control" style="width: 90%; height: 400px;" name="content_of_page" rows="30" cols="100" placeholder="Enter content of your page">{{previos_content}}
